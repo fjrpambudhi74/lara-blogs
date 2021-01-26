@@ -16,7 +16,11 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/create', [PostController::class, 'create']);
+Route::post('/posts/store', [PostController::class, 'store']);
+Route::get('/posts/{post:slug}', [PostController::class, 'show']);
+
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
-
-Route::get('/posts/{post:slug}', [PostController::class, 'show']);
