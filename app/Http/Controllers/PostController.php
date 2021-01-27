@@ -26,7 +26,7 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create', ['post' => new Post()]);
     }
 
     public function store(Request $request)
@@ -50,13 +50,60 @@ class PostController extends Controller
         // 2
         // Post::create($request->all());
 
+        // Validate
+        // 1
+        // $request->validate([
+        //     'title' => 'required|min:3',
+        //     'body' => 'required',
+        // ]);
+
+        // 2
+        $attr = $this->validateRequest();
+
         // 3
-        $post = $request->all();
-        $post['slug'] = \Str::slug($request->title);
-        Post::create($post);
+        // $post = $request->all();
+        // $post['slug'] = \Str::slug($request->title);
+        // Post::create($post);
+
+        // 4
+        $attr['slug'] = \Str::slug($request->title);
+        Post::create($attr);
+
+        session()->flash('success', 'The Post was created');
 
         return redirect()->to('posts');
         // return redirect()->to('posts/create'); or
         // return back();
+    }
+
+    public function edit(Post $post)
+    {
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Post $post)
+    {
+        // dd($post);
+        // Validate
+        $attr = $this->validateRequest();
+
+        // Update title and body
+        $post->update($attr);
+
+        // Message when success
+        session()->flash('success', 'The Post was updated');
+
+        // redirect
+        return redirect()->to('posts');
+
+        // Post::create($attr);
+    }
+
+    public function validateRequest()
+    {
+        return request()->validate([
+            'title' => 'required|min:3',
+            'body' => 'required',
+        ]);
     }
 }

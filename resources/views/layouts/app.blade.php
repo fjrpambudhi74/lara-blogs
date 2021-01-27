@@ -9,6 +9,10 @@
 </head>
 <body>
     @include('layouts.navbar')
-    @yield('content')
+
+    <div class="py-4">
+        @include('partials.alert')
+        @yield('content')
+    </div>
 </body>
 </html>

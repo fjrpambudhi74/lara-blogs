@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => "New Post"])
+@extends('layouts.app', ['title' => "Update Post"])
 
 @section('content')
 
@@ -10,12 +10,13 @@
 
             <div class="card">
                 <div class="card-header">
-                    New Post
+                    Edit Post : {{ $post->title }}
                 </div>
                 <div class="card-body">
-                    <form action="/posts/store" method="POST">
+                    <form action="/posts/{{ $post->slug }}/edit" method="POST">
+                        @method('patch')
                         @csrf
-                        @include('partials.form', ['submit' => 'Create'])
+                        @include('partials.form')
                     </form>
                 </div>
             </div>
