@@ -5,7 +5,11 @@
     @if ($posts->count())
     <div class="d-flex justify-content-between mt-3">
         <div>
+            @isset($category)
+            <h3>Category : {{ $category->name }}</h3>
+            @else
             <h3>All Post</h3>
+            @endisset
         </div>
         <div>
             <a href="/posts/create" class="btn btn-primary">New Post</a>
