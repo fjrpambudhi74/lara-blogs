@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 Route::delete('/posts/{post:slug}/delete', [PostController::class, 'destroy']);
 
 Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+Route::get('tags/{tag:slug}', [TagController::class, 'show']);
 
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
