@@ -9,7 +9,7 @@
 </div>
 <div class="form-group">
     <label for="body">Description</label>
-    <textarea type="text" name="body" id="body" class="form-control">{{ old('title') ??  $post->body }}</textarea>
+    <textarea type="text" name="body" id="body" class="form-control">{{ old('body') ??  $post->body }}</textarea>
     @error('title')
     <div class="mt-2 text-danger">
         {{ $message }}
@@ -19,7 +19,7 @@
 <div class="form-group mb-3">
     <label for="category">Category</label>
     <select name="category" id="category" class="form-control">
-        <option disabled selected>Choose One</option>
+        <option disabled selected>Select a category</option>
         @foreach ($categories as $category)
             <option {{ $category->id == $post->category_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
         @endforeach
@@ -32,13 +32,16 @@
 </div>
 <div class="form-group mb-3">
     <label for="tags">Tags</label>
-    <select name="tags[]" id="tags" class="form-control" multiple>
-
+    <select name="tags[]" id="tags" class="form-control select-multiple" multiple="multiple">
+        {{-- <option disabled selected>Choose One</option> --}}
         @foreach ($post->tags as $tag)
-            <option selected value="{{ old('id') ?? $tag->id }}">{{ $tag->name }}</option>
+            <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
+        @endforeach
+        @foreach ($tags as $tag)
+            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
         @endforeach
     </select>
-    @error('tag')
+    @error('tags')
     <div class="mt-2 text-danger">
         {{ $message }}
     </div>

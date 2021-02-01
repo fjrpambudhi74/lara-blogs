@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\{Category, Post, Tag};
 use Illuminate\Http\Request;
 
@@ -34,7 +35,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         // First Step
         // $post = new Post;
@@ -63,7 +64,9 @@ class PostController extends Controller
         // ]);
 
         // 2
-        $attr = $this->validateRequest();
+        // $attr = $this->validateRequest();
+        $attr = $request->all();
+
         $attr['category_id'] = request('category');
 
         // 3
@@ -93,41 +96,52 @@ class PostController extends Controller
         ]);
     }
 
-    public function update(Post $post)
+    public function update(PostRequest $request, Post $post)
     {
         // dd($post);
         // Validate
-        $attr = $this->validateRequest();
+        // $attr = $this->validateRequest();
+
+        $attr = $request->all();
+
+        $attr['category_id'] = request('category');
 
         // Update title and body
         $post->update($attr);
+
+        // Delete tag form & database
+        $post->tags()->sync(request('tags'));
 
         // Message when success
         session()->flash('success', 'The Post was updated');
 
         // redirect
-        return redirect()->to('posts');
+        return redirect()->to('');
 
         // Post::create($attr);
-    }
-
-    public function validateRequest()
-    {
-        return request()->validate([
-            'title' => 'required|min:3',
-            'body' => 'required',
-            'category' => 'required',
-            'tags' => 'array|required'
-        ]);
     }
 
     public function destroy(Post $post)
     {
         // dd($post);
+
+        // delete post with tag relation
+        $post->tags()->detach();
+
         $post->delete();
 
         session()->flash('success', 'The Post was updated');
 
-        return redirect()->to('posts');
+        return redirect()->to('');
     }
+
+    // public function validateRequest()
+    // {
+    //     return request()->validate([
+    //         'title' => 'required|min:3',
+    //         'body' => 'required',
+    //         'category' => 'required',
+    //         'tags' => 'array|required'
+    //     ]);
+    // }
 }
