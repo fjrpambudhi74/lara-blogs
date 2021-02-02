@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    // Auth for all page
+    // public function __construct()
+    // {
+    //     $this->middleware('auth')->except(['index', 'show']);
+    // }
+
     public function index()
     {
         // $posts = Post::get();
@@ -109,7 +115,7 @@ class PostController extends Controller
         // Update title and body
         $post->update($attr);
 
-        // Delete tag form & database
+        // Delete tag in form & database
         $post->tags()->sync(request('tags'));
 
         // Message when success

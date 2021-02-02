@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
@@ -17,22 +16,27 @@ use App\Http\Controllers\TagController;
 |
 */
 
-// Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [PostController::class, 'index'])->name('posts.index');
 
-Route::get('/', [PostController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts/store', [PostController::class, 'store']);
+    Route::get('/posts/{post:slug}/edit', [PostController::class, 'edit']);
+    Route::patch('/posts/{post:slug}/edit', [PostController::class, 'update']);
+    // Route::get('/posts/{post:slug}', [PostController::class, 'show'])->withoutMiddleware('auth');
+    Route::delete('/posts/{post:slug}/delete', [PostController::class, 'destroy']);
+});
 
-Route::get('/posts/create', [PostController::class, 'create']);
-Route::post('/posts/store', [PostController::class, 'store']);
-
-Route::get('/posts/{post:slug}/edit', [PostController::class, 'edit']);
-Route::patch('/posts/{post:slug}/edit', [PostController::class, 'update']);
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])->withoutMiddleware('auth');
 
 
-Route::get('/posts/{post:slug}', [PostController::class, 'show']);
-Route::delete('/posts/{post:slug}/delete', [PostController::class, 'destroy']);
 
 Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
 Route::get('tags/{tag:slug}', [TagController::class, 'show']);
 
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

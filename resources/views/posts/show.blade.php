@@ -17,11 +17,12 @@
         <hr>
         <p>{{ $post->body }}</p>
         <div>
-
+            @auth
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-link btn-sm text-danger p-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Delete
             </button>
+            @endauth
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
