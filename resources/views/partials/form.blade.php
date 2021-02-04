@@ -32,7 +32,7 @@
 </div>
 <div class="form-group mb-3">
     <label for="tags">Tags</label>
-    <select name="tags[]" id="tags" class="form-control js-example-basic-multiple" multiple="multiple">
+    <select name="tags[]" id="tags" class="form-control select2" multiple="multiple">
         {{-- <option disabled selected>Choose One</option> --}}
         @foreach ($post->tags as $tag)
             <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>

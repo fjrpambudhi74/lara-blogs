@@ -31,6 +31,7 @@
         </main>
     </div>
 
+
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
@@ -39,13 +40,13 @@
 
     <!-- Select2 multiple -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
-        $(document).ready(function() {
-            $('.js-example-basic-multiple').select2({
-                placeholder: "Select a tag"
-            });
-        });
+         $(".select2").select2({
+             placeholder: "Select a tag"
+         });
     </script>
+
 
 </body>
 </html>
